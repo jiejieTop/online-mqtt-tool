@@ -14,12 +14,39 @@ var code_template =
 
 
 var necessary_code = '\
-mqtt_log_init();\n\
-client = mqtt_lease();'
+mqtt_client_t *client = NULL;\n\n\
+mqtt_log_init();\n\n\
+client = mqtt_lease();\n\n'
 
-var setting_code = '\
-mqtt_set_{{port}}(client, "{{port}}");\n\
-'
+// var setting_code = new Array();
+// setting_code[0] = 'mqtt_set_host(client, "{{host}}");';
+// setting_code[1] = 'mqtt_set_port(client, "{{port}}");';
+// setting_code[2] = 'mqtt_set_ca(client, "{{ca}}");';
+// setting_code[3] = 'mqtt_set_client_id(client, "{{client_id}}");';
+// setting_code[4] = 'mqtt_set_user_name(client, "{{user_name}}");';
+// setting_code[5] = 'mqtt_set_password(client, "{{password}}");';
+// setting_code[6] = 'mqtt_set_clean_session(client, {{clean_session}});';
+// setting_code[7] = 'mqtt_set_version(client, {{version}});';
+// setting_code[8] = 'mqtt_set_cmd_timeout(client, {{cmd_timeout}});';
+// setting_code[9] = 'mqtt_set_keep_alive_interval(client, {{keep_alive_interval}});';
+// setting_code[10] = 'mqtt_set_read_buf_size(client, {{read_buf_size}});';
+// setting_code[11] = 'mqtt_set_write_buf_size(client, {{write_buf_size}});';
+
+var connect_code_json = {
+    host: 'mqtt_set_host(client, "{{host}}");',
+    port: 'mqtt_set_port(client, "{{port}}");',
+    ca: 'mqtt_set_ca(client, "{{ca}}");',
+    client_id: 'mqtt_set_client_id(client, "{{client_id}}");',
+    user_name: 'mqtt_set_user_name(client, "{{user_name}}");',
+    password: 'mqtt_set_password(client, "{{password}}");',
+    version: 'mqtt_set_version(client, {{version}});',
+    clean_session: 'mqtt_set_clean_session(client, {{clean_session}});',
+    cmd_timeout: 'mqtt_set_cmd_timeout(client, {{cmd_timeout}});',
+    keep_alive_interval: 'mqtt_set_keep_alive_interval(client, {{keep_alive_interval}});',
+    read_buf_size: 'mqtt_set_read_buf_size(client, {{read_buf_size}});',
+    write_buf_size: 'mqtt_set_write_buf_size(client, {{write_buf_size}});',
+}
+
 
 
 function get_value() {
@@ -68,7 +95,9 @@ function import_template_file() {
 }
 
 
-function code_render(template, context) {
+function code_render(code, context) {
+    // console.log("code_render" + code + ":" + context)
+    var template = code;
     return template.replace(/\{\{(.*?)\}\}/g, (match, key) => context[key]);
 }
 
@@ -91,15 +120,35 @@ function do_import_template()
     $("#password").val("jiejietop");
 }
 
+function get_json_val(json, key){
+    return json[''+key+''];
+}
+
 function do_generate_code()
 {
+    var i = 0;
+    var generate_code = necessary_code;
     var json = {};
+
     json = traverse_get_json();
 
-    // console.log(code_render(setting_code, json));
 
-    return necessary_code;
-    // return JSON.stringify(json);
+    for (var val in json) {
+        if (json[val] != "") {
+            // console.log(val + ":" + json[val]);
+            var tmp = get_json_val(connect_code_json, val);
+
+            if (tmp != "") {
+                console.log(tmp);
+                generate_code += code_render(tmp, json);
+                generate_code += '\n';
+                console.log(generate_code);
+            }
+        }
+    }
+    
+    return generate_code;
+    // return JSON.stringify(setting_code_json);
 }
 
 
@@ -132,12 +181,12 @@ function traverse_get_json()
         }
     }
 
-    controls = document.getElementsByTagName('select');
-    for(var i=0; i<controls.length; i++) {
-        var index = controls[i].selectedIndex ; 
-        var id = controls[i].name;
-        json[id] = controls[i].options[index].value;
-    }
+    // controls = document.getElementsByTagName('select');
+    // for(var i=0; i<controls.length; i++) {
+    //     var index = controls[i].selectedIndex ; 
+    //     var id = controls[i].name;
+    //     json[id] = controls[i].options[index].value;
+    // }
 
     // JSON.stringify(list);//将对象转换为json
     console.log(json);
