@@ -1,7 +1,7 @@
 
 var addr, port, ca, version, clientid, username, password, clean_session;
 var pub_topic_handle_json = {};
-
+var sup_topic_id = 0, pup_topic_id = 0;
 
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -231,6 +231,6 @@ function traverse_get_json()
         json[id] = controls[i].value;
     }
 
-    // console.log(json);
+    console.log(json);
     return json;
 }

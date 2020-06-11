@@ -2,8 +2,8 @@
     <head>
         <script type="text/javascript" src="template.js"></script>
         <script type="text/javascript" src="generate.js"></script>
+        <script type="text/javascript" src="btn-more.js"></script>
         <script type="text/javascript" src="jquery.min.js"></script>
-        <script type="text/javascript" src="jbusuanzi.pure.mini.js"></script>
         <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
         
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         </div>
         
         <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">连接配置</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">连接配置</div>
         </div>
         <div class="wrapper-all" id="connectConfig">
             <div class="wrapper">
@@ -98,7 +98,7 @@
         </div>
 
         <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">订阅主题</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">订阅主题</div>
         </div>
 
         <div class="wrapper-all">
@@ -129,8 +129,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="wrapper-all">
+  
+        <div class="button-more">
+            <button type="button" id="btnMoreSubTopic" name="btnMoreSubTopic" onclick="btn_more_sub_topic()" class="btn btn-outline-primary">更多</button>
+        </div>
+        <!-- <div class="wrapper-all">
             <div class="wrapper">
                 <div class="all">
                     <div class="connection2">
@@ -150,17 +153,16 @@
 
                         <div class="form-group1">
                             <label for="subTopicHandle2">主题处理函数</label>
-                            <!-- <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" value="NULL" placeholder="subTopicHandle"> -->
                             <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" value="NULL"
                                    onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}"/>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class=" progress">
-            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">发布主题</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">发布主题</div>
         </div>
 
         <div class="wrapper-all">
@@ -191,6 +193,14 @@
             </div>
         </div>
 
+        <div class="button-more">
+            <button type="button" id="btnMorePubTopic" name="btnMorePubTopic" onclick="btn_more_pub_topic()" class="btn btn-outline-primary">更多</button>
+        </div>
+
+        <div class=" progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">生成代码</div>
+        </div>
+
         <div class="wrapper1">
             <button type="button" id="importTemplate" name="importTemplate" onclick="import_template()" class="btn btn-primary">导入模板</button>
             <button type="button" id="generate" name="generate" onclick="generate_code()" class="btn btn-primary">生成代码</button>
@@ -209,17 +219,18 @@
                 </div>
             </div>
         </div>
-        
 
-        <span id="busuanzi_container_site_pv">
-                本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        </span>
+        <!-- <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span> -->
 
         <br>
         <script type="text/javascript">
-
+            
             function body_onload() {
                 $("#pubTopicMessage1").val("NULL");
+                sup_topic_id = 1;
+                pup_topic_id = 1;
             }
 
             function import_template() {
@@ -234,7 +245,32 @@
                 }
                 $("#generateCode").val(do_generate_code());
             }
-        </script>
 
+            function btn_more_sub_topic() {
+                sup_topic_id ++;
+                if (sup_topic_id > 10) {
+                    alert("代码生成工具最多支持配置10个订阅主题，您可以手动编写代码以实现更多的发布主题！");
+                    return;
+                }
+                var obj = document.getElementById("btnMoreSubTopic");
+                obj.insertAdjacentHTML("beforebegin", get_more_sub_topic(sup_topic_id));
+            }
+
+            function btn_more_pub_topic() {
+                pup_topic_id ++;
+                if (pup_topic_id > 10) {
+                    alert("代码生成工具最多支持配置10个发布主题，您可以手动编写代码以实现更多的发布主题！");
+                    return;
+                }
+                var obj = document.getElementById("btnMorePubTopic");
+                obj.insertAdjacentHTML("beforebegin", get_more_pub_topic(pup_topic_id));
+                refresh_pub_topic_message(pup_topic_id);
+            }
+
+
+        </script>
     </body>
 </html>
+
+
+

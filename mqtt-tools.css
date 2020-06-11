@@ -117,6 +117,24 @@
     border-radius: 0.25rem
 }
 
+@-webkit-keyframes progress-bar-stripes {
+    from {
+      background-position: 1rem 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+}
+  
+@keyframes progress-bar-stripes {
+    from {
+      background-position: 1rem 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+}
+
 .btn {
     display: inline-block;
     margin-left: 10px;
@@ -178,6 +196,42 @@
     box-shadow: 0 0 0 0.2rem rgba(78,178,235,0.5)
 }
 
+
+.btn-outline-primary {
+    color: #2FA4E7;
+    margin-top: 10px;
+    border-color: #2FA4E7;
+  }
+  
+  .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #2FA4E7;
+    border-color: #2FA4E7;
+  }
+  
+  .btn-outline-primary:focus, .btn-outline-primary.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
+  }
+  
+  .btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    color: #2FA4E7;
+    background-color: transparent;
+  }
+  
+  .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active,
+  .show > .btn-outline-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #2FA4E7;
+    border-color: #2FA4E7;
+  }
+  
+  .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-outline-primary.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(47, 164, 231, 0.5);
+  }
+
 .progress {
     width: 85%;
     margin: 1% auto 0;
@@ -211,6 +265,23 @@
     background-color: #2FA4E7;
     -webkit-transition: width 0.6s ease;
     transition: width 0.6s ease;
+}
+
+.progress-bar-striped {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-size: 1rem 1rem;
+}
+
+.progress-bar-animated {
+    -webkit-animation: progress-bar-stripes 1s linear infinite;
+            animation: progress-bar-stripes 1s linear infinite;
+}
+  
+@media (prefers-reduced-motion: reduce) {
+    .progress-bar-animated {
+      -webkit-animation: none;
+              animation: none;
+    }
 }
 
 .heading-center {
@@ -261,5 +332,15 @@
 }
 
 
+.button-more {
+    text-align:center;
+    /* margin: 10px 0 0 0; */
+}
 
+.btn-more-primary {
+    color: #fff;
+    margin-top: 10px;
+    background-color: #2FA4E7;
+    border-color: #2FA4E7
+}
 
