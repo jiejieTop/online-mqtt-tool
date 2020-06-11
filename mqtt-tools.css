@@ -337,10 +337,10 @@
     /* margin: 10px 0 0 0; */
 }
 
-.btn-more-primary {
-    color: #fff;
+.statistics {
+    width: 85%;
+    margin: 1% auto 0;
     margin-top: 10px;
-    background-color: #2FA4E7;
-    border-color: #2FA4E7
+    text-align:center;
 }
 
