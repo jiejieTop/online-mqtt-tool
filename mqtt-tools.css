@@ -344,3 +344,6 @@
     text-align:center;
 }
 
+.form-check-input {
+    vertical-align: middle;
+}

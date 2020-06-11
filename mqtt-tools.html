@@ -4,8 +4,9 @@
         <script type="text/javascript" src="generate.js"></script>
         <script type="text/javascript" src="btn-more.js"></script>
         <script type="text/javascript" src="jquery.min.js"></script>
-        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <script type="text/javascript" src="busuanzi.pure.mini.js"></script>
         <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
+        <!-- <link rel="stylesheet" type="text/css" href="bootstrap.css"> -->
         
         <meta charset="utf-8">
         <title></title>
@@ -66,9 +67,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cleanSession">
-                            <input class="form-check-input" type="checkbox" id="cleanSession" name="clean_session" value="1" checked=""> 清除会话 </label>
+                            <input style="vertical-align:middle" type="checkbox" id="cleanSession" name="clean_session" value="1" checked="">清除会话
+                            <input style="vertical-align:middle" type="checkbox" id="willFlag" name="will_flag" value="0" onclick="checkbox_set_will()">设置遗嘱
                         </div>
+                        <!-- <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
+                            <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                        </div> -->
                     </div>  
                 </div>
 
@@ -97,6 +102,8 @@
                 </div>
             </div>
         </div>
+
+        <div id = setWillFlag></div>
 
         <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">订阅主题</div>
@@ -130,9 +137,11 @@
                 </div>
             </div>
         </div>
-  
+
+        <div id = addMoreSubTopic></div>
+
         <div class="button-more">
-            <button type="button" id="btnMoreSubTopic" name="btnMoreSubTopic" onclick="btn_more_sub_topic()" class="btn btn-outline-primary">更多</button>
+            <button type="button" id="btnMoreSubTopic" name="btnMoreSubTopic" onclick="btn_more_sub_topic()" class="btn btn-outline-primary">添加更多</button>
         </div>
         <!-- <div class="wrapper-all">
             <div class="wrapper">
@@ -194,8 +203,10 @@
             </div>
         </div>
 
+        <div id = addMorePubTopic></div>
+
         <div class="button-more">
-            <button type="button" id="btnMorePubTopic" name="btnMorePubTopic" onclick="btn_more_pub_topic()" class="btn btn-outline-primary">更多</button>
+            <button type="button" id="btnMorePubTopic" name="btnMorePubTopic" onclick="btn_more_pub_topic()" class="btn btn-outline-primary">添加更多</button>
         </div>
 
         <div class=" progress">
@@ -223,7 +234,7 @@
         
         <div class="statistics">
             <span id="busuanzi_container_site_pv">
-                总访问量<span id="busuanzi_value_site_pv" ></span>次
+                本站总访问量<span style="color:red" id="busuanzi_value_site_pv" ></span>次
             </span>
         </div>
         <br>
@@ -254,7 +265,7 @@
                     alert("代码生成工具最多支持配置10个订阅主题，您可以手动编写代码以实现更多的发布主题！");
                     return;
                 }
-                var obj = document.getElementById("btnMoreSubTopic");
+                var obj = document.getElementById("addMoreSubTopic");
                 obj.insertAdjacentHTML("beforebegin", get_more_sub_topic(sup_topic_id));
             }
 
@@ -264,9 +275,26 @@
                     alert("代码生成工具最多支持配置10个发布主题，您可以手动编写代码以实现更多的发布主题！");
                     return;
                 }
-                var obj = document.getElementById("btnMorePubTopic");
+                var obj = document.getElementById("addMorePubTopic");
                 obj.insertAdjacentHTML("beforebegin", get_more_pub_topic(pup_topic_id));
                 refresh_pub_topic_message(pup_topic_id);
+            }
+
+            function checkbox_set_will() {
+                var flag = document.getElementById("willFlag").checked;
+                var value = document.getElementById("willFlag").value;
+
+                if (flag == true) {
+                    $("#willFlag").val(1);
+                } else {
+                    $("#willFlag").val(0);
+                }
+                
+                console.log(flag);
+                console.log(value);
+                
+                // var obj = document.getElementById("setWillFlag");
+                // obj.insertAdjacentHTML("beforebegin", get_more_pub_topic(pup_topic_id));
             }
 
 
