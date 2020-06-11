@@ -1,14 +1,23 @@
 <html>
     <head>
+        <script type="text/javascript" src="template.js"></script>
         <script type="text/javascript" src="generate.js"></script>
         <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jbusuanzi.pure.mini.js"></script>
         <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
         
         <meta charset="utf-8">
         <title></title>
 
     </head>
-    <body>
+    <body onload="body_onload()"> 
+        <div class="heading-center">
+            <h1 align="center">欢迎使用mqttclient代码生成工具</h1>
+        </div>
+        
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">连接配置</div>
+        </div>
         <div class="wrapper-all" id="connectConfig">
             <div class="wrapper">
                 <div class="left">
@@ -76,16 +85,20 @@
                     
                         <div class="form-group">
                             <label for="readBufSize">读缓冲区大小</label>
-                            <input type="text" class="form-control" id="readBufSize" name="read_buf_size" placeholder="1024">
+                            <input type="text" class="form-control" id="ReadBufSize" name="read_buf_size" placeholder="1024">
                         </div>
                     
                         <div class="form-group">
                             <label for="writeBufSize">写缓冲区大小</label>
-                            <input type="text" class="form-control" id="writeBufSize" name="write_buf_size" placeholder="1024">
+                            <input type="text" class="form-control" id="WriteBufSize" name="write_buf_size" placeholder="1024">
                         </div>
                     </div> 
                 </div>
             </div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">订阅主题</div>
         </div>
 
         <div class="wrapper-all">
@@ -100,15 +113,17 @@
                         <div class="form-group1">
                             <label for="subTopicQos1">服务质量</label>
                             <select type="text" class="form-control" id="subTopicQos1" name="sub_topic_qos1">
-                                <option value=0>QoS0</option>
-                                <option value=1>QoS1</option>
-                                <option value=2>QoS2</option>
+                                <option value="QOS0">QoS0</option>
+                                <option value="QOS1">QoS1</option>
+                                <option value="QOS2">QoS2</option>
                             </select>
                         </div>
 
                         <div class="form-group1">
                             <label for="subTopicHandle1">主题处理函数</label>
-                            <input type="text" class="form-control" id="subTopicHandle1" name="sub_topic_handle1" placeholder="topicName">
+                            <!-- <input type="text" class="form-control" id="subTopicHandle1" name="sub_topic_handle1" value="NULL" placeholder="subTopicHandle"> -->
+                            <input type="text" class="form-control" id="subTopicHandle1" name="sub_topic_handle1" value="NULL"
+                                   onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}"/>
                         </div>
                     </div>
                 </div>
@@ -127,15 +142,49 @@
                         <div class="form-group1">
                             <label for="subTopicQos2">服务质量</label>
                             <select type="text" class="form-control" id="subTopicQos2" name="sub_topic_qos2">
-                                <option value=0>QoS0</option>
-                                <option value=1>QoS1</option>
-                                <option value=2>QoS2</option>
+                                <option value="QOS0">QoS0</option>
+                                <option value="QOS1">QoS1</option>
+                                <option value="QOS2">QoS2</option>
                             </select>
                         </div>
 
                         <div class="form-group1">
                             <label for="subTopicHandle2">主题处理函数</label>
-                            <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" placeholder="topicName">
+                            <!-- <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" value="NULL" placeholder="subTopicHandle"> -->
+                            <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" value="NULL"
+                                   onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" progress">
+            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">发布主题</div>
+        </div>
+
+        <div class="wrapper-all">
+            <div class="wrapper">
+                <div class="all">
+                    <div class="connection2">
+                        <div class="form-group1">
+                            <label for="pubTopic1">主题名字</label>
+                            <input type="text" class="form-control" id="pubTopic1" name="pub_topic1" placeholder="topicName">
+                        </div>
+
+                        <div class="form-group1">
+                            <label for="pubTopicQos1">服务质量</label>
+                            <select type="text" class="form-control" id="pubTopicQos1" name="pub_topic_qos1">
+                                <option value="0">QoS0</option>
+                                <option value="1">QoS1</option>
+                                <option value="2">QoS2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group1">
+                            <label for="pubTopicMessage1">发布的消息</label>
+                            <textarea type="text" class="form-control1" id="pubTopicMessage1" name="pub_topic_message1" value='NULL' rows="1"
+                                      onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}" ></textarea>
                         </div>
                     </div>
                 </div>
@@ -161,12 +210,20 @@
             </div>
         </div>
         
+
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+
         <br>
         <script type="text/javascript">
 
+            function body_onload() {
+                $("#pubTopicMessage1").val("NULL");
+            }
+
             function import_template() {
                 do_import_template();
-                // print_value();
             }
 
             function generate_code() {
@@ -175,12 +232,9 @@
                     alert("服务器地址与端口号必须填写");
                     return;
                 }
-                // print_value();
-
                 $("#generateCode").val(do_generate_code());
             }
-
-
         </script>
+
     </body>
 </html>

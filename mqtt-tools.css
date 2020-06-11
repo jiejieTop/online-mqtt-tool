@@ -178,6 +178,46 @@
     box-shadow: 0 0 0 0.2rem rgba(78,178,235,0.5)
 }
 
+.progress {
+    width: 85%;
+    margin: 1% auto 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    /* display: flex; */
+    height: 1.2rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    width: 85%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    /* display: flex; */
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #2FA4E7;
+    -webkit-transition: width 0.6s ease;
+    transition: width 0.6s ease;
+}
+
+.heading-center {
+    text-align: "center";
+    margin: 0 auto;
+    color: #2FA4E7;
+}
 
 .wrapper-all{
     width: 85%;
@@ -191,9 +231,7 @@
 
 .wrapper1{
     width: 85%;
-    margin: 10px 10px 0 0;
-    margin: 20px auto 0;
-    /* margin: 30 30px 30px 30; */
+    margin: 1% auto 0;
     display: flex;
     /* 内容垂直居中 */
     align-items: center; 
@@ -202,12 +240,11 @@
     /* background-color: rgb(162, 0, 0); */
 }
 
-
-
 .left{
     width: 30%;
     margin: 30px 30px
 }
+
 .middle{
     width: 30%;
     margin: 30px 30px
@@ -222,5 +259,7 @@
     width: 100%;
     margin: 10px 30px
 }
+
+
 
 
