@@ -1,7 +1,8 @@
 
-var addr, port, ca, version, clientid, username, password, clean_session;
+var addr, port, version, clientid, username, password, clean_session;
 var pub_topic_handle_json = {};
 var sup_topic_id = 0, pup_topic_id = 0;
+var ca_file_str = '';
 
 Date.prototype.Format = function (fmt) {
     var o = {
@@ -23,7 +24,6 @@ Date.prototype.Format = function (fmt) {
 function get_value() {
     addr = document.getElementById("brokerAddress").value;
     port = document.getElementById("brokerPort").value;
-    ca = document.getElementById("brokerCA").value;
     version = document.getElementById("mqttVersion").value;
     clientid = document.getElementById("clientID").value;
     username = document.getElementById("userName").value;
@@ -35,7 +35,6 @@ function print_value() {
     get_value();
     console.log("addr: " + addr);
     console.log("port: " + port);
-    console.log("ca: " + ca);
     console.log("version: " + version);
     console.log("clientid: " + clientid);
     console.log("username: " + username);
@@ -74,7 +73,7 @@ function do_import_template()
 {
     get_value();
 
-    if (addr != "" || port != "" || ca != "" || clientid != ""
+    if (addr != "" || port != "" || clientid != ""
         || username != "" || password != "") {
         var is_yes = window.confirm("已经填写数据，是否导入模板覆盖填写的内容？");
         if (!is_yes)
@@ -92,7 +91,7 @@ function do_import_template()
     $("#WriteBufSize").val(2048);
     $("#subTopic1").val("sub_topic1");
     $("#subTopicHandle1").val("sub_topic_handle1");
-    $("#subTopic2").val("sub_topic2");
+    // $("#subTopic2").val("sub_topic2");
     // $("#subTopicHandle2").val("sub_topic_handle2");
     $("#pubTopic1").val("sub_topic1");
     $("#pubTopicMessage1").val(random_string(20));
@@ -123,6 +122,24 @@ function generate_include_code() {
     time["now_time"] = new Date().Format("yyyy-MM-dd HH:mm:ss");
     return code_render(necessary_include_code, time);
 }
+
+function generate_ca_file_code(json) 
+{
+    if (ca_file_str != '') {
+        var ca_tmp ='';
+        var ca_json = {};
+        ca_file_str.trim().split('\n').forEach(function(v, i) {
+            window['str' + (i+1)] = v
+
+            ca_tmp += '\"' + v + "\\r\\n" + '\"' + '\n'; 
+        })
+        // console.log(ca_tmp);
+        ca_json["ca"] = ca_tmp;
+        return do_generate_code_form_data(input_ca_file_code_json, ca_json);
+    }
+    return '';
+}
+
 
 function generate_sub_topic_handle_code(json) 
 {
@@ -171,6 +188,8 @@ function do_generate_code()
 
     generate_code += generate_include_code();
 
+    generate_code += generate_ca_file_code(json)
+
     generate_code += generate_sub_topic_handle_code(json);
 
     generate_code += generate_pub_topic_handle_code(json);
@@ -215,6 +234,14 @@ function traverse_get_json()
             } else {
                 json[id] = 0;
             }
+        }        
+        else if (controls[i].type=='file') {
+            var id = controls[i].name;
+            if (ca_file_str != '') {
+                json[id] = "ca_file_str";
+            } else {
+                json[id] = '';
+            }
         }
     }
 
@@ -231,6 +258,6 @@ function traverse_get_json()
         json[id] = controls[i].value;
     }
 
-    console.log(json);
+    // console.log(json);
     return json;
 }

@@ -7,7 +7,6 @@
         <script type="text/javascript" src="busuanzi.pure.mini.js"></script>
         <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
         <!-- <link rel="stylesheet" type="text/css" href="bootstrap.css"> -->
-        
         <meta charset="utf-8">
         <title></title>
 
@@ -15,6 +14,7 @@
     <body onload="body_onload()"> 
         <div class="heading-center">
             <h1 align="center">欢迎使用mqttclient代码生成工具</h1>
+            <p align="center" style="color: black;">开源地址：<strong><a href="https://github.com/jiejieTop/mqttclient">https://github.com/jiejieTop/mqttclient</a></strong>.</p>
         </div>
         
         <div class="progress">
@@ -36,14 +36,19 @@
 
                         <div class="form-group">
                             <label for="brokerCA">CA证书</label>
-                            <input type="text" class="form-control" id="brokerCA" name="ca" placeholder="">
+                            <div class="input-group mb-3">
+                              <div class="custom-file">
+                                <label class="custom-file-label" for="brokerCA" id="inputFileLable">选择证书文件</label>
+                                <input type="file" class="custom-file-input" id="brokerCA" value='' name="ca" accept="*/*" onchange="handle_files(this.files)">
+                              </div>
+                            </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="mqttVersion">MQTT版本</label>
                             <select type="text" class="form-control" id="mqttVersion" name="version">
-                            <option value=4>MQTT 3.1.1</option>
-                            <option value=3>MQTT 3.1</option>
+                            <option value=''>MQTT 3.1.1</option>     <!-- 默认值不需要生成代码 -->
+                            <option value='3'>MQTT 3.1</option>
                             </select>
                         </div>
                     </div>
@@ -66,14 +71,10 @@
                             <input type="text" class="form-control" id="clientID" name="client_id" placeholder="clientID">
                         </div>
 
-                        <div class="form-group">
-                            <input style="vertical-align:middle" type="checkbox" id="cleanSession" name="clean_session" value="1" checked="">清除会话
-                            <input style="vertical-align:middle" type="checkbox" id="willFlag" name="will_flag" value="0" onclick="checkbox_set_will()">设置遗嘱
+                        <div class="form-group" id = settingFlag>
+                            <input style="vertical-align:middle" type="checkbox" id="cleanSession" name="clean_session" value="1" checked="">清除会话</input>
+                            <input style="vertical-align:middle" type="checkbox" id="willFlag" name="will_flag" value="0" onclick="checkbox_set_will()">设置遗嘱</input>
                         </div>
-                        <!-- <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                            <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
-                        </div> -->
                     </div>  
                 </div>
 
@@ -103,7 +104,7 @@
             </div>
         </div>
 
-        <div id = setWillFlag></div>
+        <div id = setWill></div>
 
         <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">订阅主题</div>
@@ -129,7 +130,6 @@
 
                         <div class="form-group1">
                             <label for="subTopicHandle1">主题处理函数</label>
-                            <!-- <input type="text" class="form-control" id="subTopicHandle1" name="sub_topic_handle1" value="NULL" placeholder="subTopicHandle"> -->
                             <input type="text" class="form-control" id="subTopicHandle1" name="sub_topic_handle1" value="NULL"
                                    onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}"/>
                         </div>
@@ -143,33 +143,6 @@
         <div class="button-more">
             <button type="button" id="btnMoreSubTopic" name="btnMoreSubTopic" onclick="btn_more_sub_topic()" class="btn btn-outline-primary">添加更多</button>
         </div>
-        <!-- <div class="wrapper-all">
-            <div class="wrapper">
-                <div class="all">
-                    <div class="connection2">
-                        <div class="form-group1">
-                            <label for="subTopic2">主题名字</label>
-                            <input type="text" class="form-control" id="subTopic2" name="sub_topic2" placeholder="topicName">
-                        </div>
-
-                        <div class="form-group1">
-                            <label for="subTopicQos2">服务质量</label>
-                            <select type="text" class="form-control" id="subTopicQos2" name="sub_topic_qos2">
-                                <option value="QOS0">QoS0</option>
-                                <option value="QOS1">QoS1</option>
-                                <option value="QOS2">QoS2</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group1">
-                            <label for="subTopicHandle2">主题处理函数</label>
-                            <input type="text" class="form-control" id="subTopicHandle2" name="sub_topic_handle2" value="NULL"
-                                   onfocus = "if (value == 'NULL') {value = ''}" onblur = "if (value == '') {value = 'NULL'}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <div class=" progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">发布主题</div>
@@ -286,18 +259,37 @@
 
                 if (flag == true) {
                     $("#willFlag").val(1);
+                    var obj = document.getElementById("settingFlag");
+                    obj.insertAdjacentHTML("beforeend", will_retain_flag);
+
+                    obj = document.getElementById("setWill");
+                    obj.insertAdjacentHTML("beforeend", will_setting);
                 } else {
                     $("#willFlag").val(0);
+                    var obj = document.getElementById("settingFlag");
+                    // var len = obj.childElementCount;
+                    obj.removeChild(obj.lastChild);
+                    obj.removeChild(obj.lastChild);
+
+                    obj = document.getElementById("setWill");
+                    obj.removeChild(obj.lastChild);
                 }
-                
-                console.log(flag);
-                console.log(value);
-                
-                // var obj = document.getElementById("setWillFlag");
-                // obj.insertAdjacentHTML("beforebegin", get_more_pub_topic(pup_topic_id));
             }
 
+            function handle_files(files) {
+                if(files.length){
+                    let file = files[0];
 
+                    var obj = document.getElementById("inputFileLable");
+                    obj.innerHTML = file.name;
+
+                    let reader = new FileReader();
+                    reader.onload = function() {
+                        ca_file_str = this.result;
+                    };
+                    reader.readAsText(file);
+                }
+            }
         </script>
     </body>
 </html>

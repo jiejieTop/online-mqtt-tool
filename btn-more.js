@@ -54,6 +54,38 @@ var more_pub_topic = '\
 </div>'
 
 
+var will_retain_flag = '\
+<input style="vertical-align:middle" type="checkbox" id="willRetain" name="will_retain" value="1">遗嘱保留</input>\
+'
+
+var will_setting = '\
+<div class="wrapper-all">\
+<div class="wrapper">\
+    <div class="all">\
+        <div class="connection2">\
+            <div class="form-group1">\
+                <label for="willTopic">遗嘱主题</label>\
+                <input type="text" class="form-control" id="willTopic" name="will_topic" placeholder="topicName">\
+            </div>\
+            <div class="form-group1">\
+                <label for="willQos">服务质量</label>\
+                <select type="text" class="form-control" id="willQos" name="will_qos">\
+                    <option value="QOS0">QoS0</option>\
+                    <option value="QOS1">QoS1</option>\
+                    <option value="QOS2">QoS2</option>\
+                </select>\
+            </div>\
+            <div class="form-group1">\
+                <label for="willMessage">遗嘱消息</label>\
+                <textarea type="text" class="form-control1" id="willMessage" name="will_message" value=\'NULL\' rows="1" placeholder="NULL"></textarea>\
+            </div>\
+        </div>\
+    </div>\
+</div>\
+</div>\
+'
+
+
 function get_more_sub_topic(id) 
 {
     var tmp = {"id": id};

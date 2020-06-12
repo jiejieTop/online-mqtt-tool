@@ -218,6 +218,16 @@ static int mqtt_publish_handle10(mqtt_client_t *client)\n\
 }\n\
 '
 
+var input_ca_file_code = '\
+static const char *ca_crt = {\n\
+{{ca}}\
+};\
+'
+var input_ca_file_code_json = {
+    ca: input_ca_file_code
+}
+
+
 var necessary_main_start_code = '\n\
 int main(void)\n\
 {\n\
@@ -243,7 +253,7 @@ var necessary_main_end_code = '\n\
         {{pub_topic9}}\
         {{pub_topic10}}\
         \n\
-        platform_timer_usleep(4*1000*1000);\n\
+        mqtt_sleep_ms(4 * 1000);\n\
     }\n\
 }\n\
 '
@@ -287,10 +297,16 @@ var publish_handle_json = {
     pub_topic10: "mqtt_publish_handle10(client);\n",
 }
 
+var connect_setting_will = '\n\
+    char *will_message = "{{will_message}}";\n\
+    mqtt_set_will_options(client, "{{will_topic}}", {{will_qos}}, {{will_retain}}, will_message);\n\
+'
+
+
 var connect_setting_code_json = {
     host: '    mqtt_set_host(client, "{{host}}");',
     port: '    mqtt_set_port(client, "{{port}}");',
-    ca: '    mqtt_set_ca(client, "{{ca}}");',
+    ca: '    mqtt_set_ca(client, (char*) ca_crt);',
     client_id: '    mqtt_set_client_id(client, "{{client_id}}");',
     user_name: '    mqtt_set_user_name(client, "{{user_name}}");',
     password: '    mqtt_set_password(client, "{{password}}");',
@@ -300,6 +316,8 @@ var connect_setting_code_json = {
     keep_alive_interval: '    mqtt_set_keep_alive_interval(client, {{keep_alive_interval}});',
     read_buf_size: '    mqtt_set_read_buf_size(client, {{read_buf_size}});',
     write_buf_size: '    mqtt_set_write_buf_size(client, {{write_buf_size}});',
+    will_flag: '    mqtt_set_will_flag(client, {{will_flag}});',
+    will_topic: connect_setting_will
 }
 
 var subscribe_topic_code_json = {
