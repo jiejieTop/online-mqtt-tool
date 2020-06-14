@@ -85,6 +85,20 @@ var will_setting = '\
 </div>\
 '
 
+var more_table_template1 = '\
+<tr>\
+    <th scope="row">{{api}}</th>\
+    <td>{{doc}}</td>\
+    <td>{{eg}}</td>\
+</tr>\
+'
+var more_table_template2 = '\
+<tr class="table-primary">\
+    <th scope="row">{{api}}</th>\
+    <td>{{doc}}</td>\
+    <td>{{eg}}</td>\
+</tr>\
+'
 
 function get_more_sub_topic(id) 
 {
@@ -105,5 +119,13 @@ function refresh_pub_topic_message(id)
     $(code_render("#pubTopicMessage{{id}}", tmp)).val("NULL");
 }
 
-
+function get_more_table_template(id, json) 
+{
+    if ((id % 2) == 0) {
+        return code_render(more_table_template1, json);
+    } else {
+        return code_render(more_table_template2, json);
+    }
+    return '';
+}
 

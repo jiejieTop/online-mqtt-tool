@@ -1,0 +1,127 @@
+[
+    {
+        "api": "mqtt_lease()", 
+        "doc": "申请一个mqtt客户端", 
+        "eg": "mqtt_client_t *client = mqtt_lease();"
+    },
+    {
+        "api": "mqtt_release()", 
+        "doc": "释放已申请的mqtt客户端", 
+        "eg": "mqtt_release(client);" 
+    },
+    {
+        "api": "mqtt_connect()", 
+        "doc": "与服务器建立连接", 
+        "eg": "mqtt_connect(client);" 
+    },
+    {
+        "api": "mqtt_disconnect()", 
+        "doc": "与服务器断开连接", 
+        "eg": "mqtt_disconnect(client);" 
+    },
+    {
+        "api": "mqtt_subscribe()", 
+        "doc": "订阅主题，参数：主题名字、服务质量、指定当收到主题数据时的处理函数", 
+        "eg": "mqtt_subscribe(client, \"topic\", QOS0, sub_topic_handle);" 
+    },
+    {
+        "api": "mqtt_unsubscribe()", 
+        "doc": "取消订阅指定主题，参数：主题名字", 
+        "eg": "mqtt_unsubscribe(client, \"topic\");" 
+    },
+    {
+        "api": "mqtt_publish()", 
+        "doc": "向指定主题发布数据，参数：主题名字，mqtt_message_t类型的数据内容", 
+        "eg": "mqtt_publish(client, \"topic\", &msg);" 
+    },
+    {
+        "api": "mqtt_list_subscribe_topic()", 
+        "doc": "列出客户端已订阅的主题", 
+        "eg": "mqtt_list_subscribe_topic(client);" 
+    },
+    {
+        "api": "mqtt_set_host()", 
+        "doc": "设置要连接的MQTT服务器地址，参数：域名 / 点分十进制的IP地址", 
+        "eg": "mqtt_set_host(client, \"www.jiejie01.top\");" 
+    },
+    {
+        "api": "mqtt_set_port()", 
+        "doc": "设置要连接的MQTT服务器端口号", 
+        "eg": "mqtt_set_port(client, \"1883\");" 
+    },
+    {
+        "api": "mqtt_set_ca()", 
+        "doc": "设置要连接的MQTT服务器ca证书", 
+        "eg": "mqtt_set_ca(client, \"ca ...\");" 
+    },
+    {
+        "api": "mqtt_set_user_name()", 
+        "doc": "设置客户端的用户名", 
+        "eg": "mqtt_set_user_name(client, \"any\");" 
+    },
+    {
+        "api": "mqtt_set_password()", 
+        "doc": "设置客户端的密码", 
+        "eg": "mqtt_set_password(client, \"any\");" 
+    },
+    {
+        "api": "mqtt_set_client_id()", 
+        "doc": "设置客户端的ID", 
+        "eg": "mqtt_set_client_id(client, \"any\");" 
+    },
+    {
+        "api": "mqtt_set_clean_session()", 
+        "doc": "设置在断开连接后清除会话", 
+        "eg": "mqtt_set_clean_session(client, 1);" 
+    },
+    {
+        "api": "mqtt_set_keep_alive_interval()", 
+        "doc": "设置心跳间隔时间（秒）", 
+        "eg": "mqtt_set_keep_alive_interval(client, 50);" 
+    },
+    {
+        "api": "mqtt_set_cmd_timeout()", 
+        "doc": "设置命令超时时间（毫秒），主要用于socket读写超时", 
+        "eg": "mqtt_set_cmd_timeout(client, 5000);" 
+    },
+    {
+        "api": "mqtt_set_reconnect_try_duration()", 
+        "doc": "设置重连的时间间隔（毫秒）", 
+        "eg": "mqtt_set_reconnect_try_duration(client, 1024);" 
+    },
+    {
+        "api": "mqtt_set_read_buf_size()", 
+        "doc": "设置读数据缓冲区的大小", 
+        "eg": "mqtt_set_read_buf_size(client, 1024);" 
+    },
+    {
+        "api": "mqtt_set_write_buf_size()", 
+        "doc": "设置写数据缓冲区的大小", 
+        "eg": "mqtt_set_write_buf_size(client, 1024);" 
+    },
+    {
+        "api": "mqtt_set_will_flag()", 
+        "doc": "设置遗嘱标记", 
+        "eg": "mqtt_set_will_flag(client, 1);" 
+    },
+    {
+        "api": "mqtt_set_will_options()", 
+        "doc": "设置遗嘱的配置信息，指定遗嘱主题，服务质量，遗嘱保留标记，遗嘱内容", 
+        "eg": "mqtt_set_will_options(client, \"will_topic\", QOS0, 0, \"will_message\");" 
+    },
+    {
+        "api": "mqtt_set_version()", 
+        "doc": "设置MQTT协议的版本，默认值是4，MQTT版本为3.1.1", 
+        "eg": "mqtt_set_version(client, 4);" 
+    },
+    {
+        "api": "mqtt_set_reconnect_handler()", 
+        "doc": "设置重连时的回调函数", 
+        "eg": "mqtt_set_reconnect_handler(client, reconnect_handler);" 
+    },
+    {
+        "api": "mqtt_set_interceptor_handler()", 
+        "doc": "设置拦截器处理函数，将所有底层数据上报给用户", 
+        "eg": "mqtt_set_interceptor_handler(client, interceptor_handler);" 
+    }
+]

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="utf-8">
         <script type="text/javascript" src="template.js"></script>
         <script type="text/javascript" src="generate.js"></script>
         <script type="text/javascript" src="btn-more.js"></script>
@@ -7,9 +8,7 @@
         <script type="text/javascript" src="busuanzi.pure.mini.js"></script>
         <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
         <!-- <link rel="stylesheet" type="text/css" href="bootstrap.css"> -->
-        <meta charset="utf-8">
         <title></title>
-
     </head>
     <body onload="body_onload()"> 
         <div class="heading-center">
@@ -37,10 +36,13 @@
                         <div class="form-group">
                             <label for="brokerCA">CA证书</label>
                             <div class="input-group mb-3">
-                              <div class="custom-file">
-                                <label class="custom-file-label" for="brokerCA" id="inputFileLable">选择证书文件</label>
-                                <input type="file" class="custom-file-input" id="brokerCA" value='' name="ca" accept="*/*" onchange="handle_files(this.files)">
-                              </div>
+                                <div class="custom-file">
+                                    <label class="custom-file-label" for="brokerCA" id="inputFileLable">选择证书文件</label>
+                                    <input type="file" class="custom-file-input" id="brokerCA" value='' name="ca" accept="*/*" onchange="handle_files(this.files)">
+                                </div>
+                                <div class="input-group-append">
+                                    <label class="input-group-text" id="removeCA" onclick="remove_ca_files()">Remove</span>
+                                </div>
                             </div>
                         </div>
                     
@@ -204,7 +206,24 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class=" progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">API接口说明</div>
+        </div>
+
+        <div class="wrapper-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-active">
+                        <th scope="col">API</th>
+                        <th scope="col">说明</th>
+                        <th scope="col">示例</th>
+                    </tr>
+                </thead>
+                <tbody id="addTable" name="addTable">
+                <tbody>
+            </table>
+        </div>
         <div class="statistics">
             <span id="busuanzi_container_site_pv">
                 本站总访问量<span style="color:red" id="busuanzi_value_site_pv" ></span>次
@@ -212,7 +231,17 @@
         </div>
         <br>
         <script type="text/javascript">
-            
+
+            var Ajax = function ()
+            {
+                $.getJSON ("api.json", function (data){
+                    $.each (data, function (i, item){
+                        var obj = document.getElementById("addTable");
+                        obj.insertAdjacentHTML("beforeend", get_more_table_template(i, item));
+                    });
+                });
+            }();
+
             function body_onload() {
                 $("#pubTopicMessage1").val("NULL");
                 sup_topic_id = 1;
@@ -289,6 +318,13 @@
                     };
                     reader.readAsText(file);
                 }
+            }
+
+            function remove_ca_files() {
+                console.log("remove_ca_files");
+                var obj = document.getElementById("inputFileLable");
+                obj.innerHTML = '选择证书文件';
+                ca_file_str = '';
             }
         </script>
     </body>
