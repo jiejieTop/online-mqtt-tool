@@ -1,0 +1,98 @@
+[
+    {
+        "arg": "MQTT_TOPIC_LEN_MAX", 
+        "doc": "配置客户端支持最大的主题名长度，主题是支持通配符的，如果主题太长则会被截断。"
+    },
+    {
+        "arg": "MQTT_ACK_HANDLER_NUM_MAX", 
+        "doc": "配置mqtt等待应答列表的最记录个数，对于qos1、qos2服务质量有要求的可以将其设置大一点，当然也必须资源跟得上，它主要是保证qos1、qos2的mqtt报文能准确到达服务器，默认值为64。"
+    },
+    {
+        "arg": "MQTT_DEFAULT_BUF_SIZE", 
+        "doc": "默认的读写数据缓冲区的大小，根据要收发数据量修改即可，默认值为1024。"
+    },
+    {
+        "arg": "MQTT_DEFAULT_CMD_TIMEOUT", 
+        "doc": "默认的命令超时，它主要是用于socket读写超时（还包括在重发的超时中使用），默认值为5000。"
+    },
+    {
+        "arg": "MQTT_MAX_CMD_TIMEOUT", 
+        "doc": "设置最大的命令超时时间，默认值是20000。"
+    },
+    {
+        "arg": "MQTT_MIN_CMD_TIMEOUT", 
+        "doc": "设置最小的命令超时时间，默认值是1000。"
+    },
+    {
+        "arg": "MQTT_KEEP_ALIVE_INTERVAL", 
+        "doc": "设置默认的保活时间，它主要是保证MQTT客户端与服务器的保持活性连接，单位为秒，默认值为50。比如MQTT客户端与服务器在指定时间间隔内没有发送数据，有没有接收到数据，此时MQTT客户端会发送一个心跳包，确认一下这个连接是否存在，如果收到服务器的应答，那么说明这个连接还是存在的，可以随时收发数据，而如果不存在了，就尝试重连或者清除会话。"
+    },
+    {
+        "arg": "MQTT_VERSION", 
+        "doc": "选择MQTT协议的版本，默认为4，表示使用MQTT 3.1.1版本，而3则表示使用MQTT 3.1版本。"
+    },
+    {
+        "arg": "MQTT_RECONNECT_DEFAULT_DURATION", 
+        "doc": "设置默认的重连时间间隔，当发生掉线时，会以这个时间间隔尝试重连，默认值为1000。"
+    },
+    {
+        "arg": "MQTT_THREAD_STACK_SIZE", 
+        "doc": "MQTT内部维护一个线程，需要设置默认的线程属性信息，MQTT_THREAD_STACK_SIZE表示线程栈的大小，默认值是2048。在linux环境下可以是不需要理会这些参数的，而在RTOS平台则需要配置，如果不使用mbedtls，线程栈2048字节已足够，而使用mbedtls加密后，需要配置4096字节以上。"
+    },
+    {
+        "arg": "MQTT_THREAD_PRIO", 
+        "doc": "设置线程优先级，默认为5。"
+    },
+    {
+        "arg": "MQTT_THREAD_TICK", 
+        "doc": "设置线程优时间片，默认为50。"
+    },
+    {
+        "arg": "MQTT_NETWORK_TYPE_NO_TLS", 
+        "doc": "设置是否需要支持TLS加密传输，如果定义了该宏，则表示不支持TLS加密传输，否则默认将支持TLS加密传输。"
+    },
+    {
+        "arg": "LOG_LEVEL", 
+        "doc": "配置对应的日志输出级别，它支持以下4种级别：ERR_LEVEL、WARN_LEVEL、INFO_LEVEL、DEBUG_LEVEL。"
+    },
+    {
+        "arg": "USE_SALOF", 
+        "doc": "如果该宏大于0，则表示使用salof指定的后端作为日志输出，反之则使用printf作为日志输出接口。"
+    },
+    {
+        "arg": "SALOF_OS", 
+        "doc": "设置salof日志库的操作系统，有以下选项：USE_LINUX、USE_TENCENTOS、USE_FREERTOS、USE_RTT。"
+    },
+    {
+        "arg": "USE_IDLE_HOOK", 
+        "doc": "如果该宏大于0，则表示在操作系统中的空闲钩子函数中输出日志，反之则通过线程异步处理或者同步处理。"
+    },
+    {
+        "arg": "LOG_COLOR", 
+        "doc": "如果该宏大于0，则表示输出的日志是带有颜色的（需要终端的支持），反之则没有颜色。"
+    },
+    {
+        "arg": "LOG_TS", 
+        "doc": "如果该宏大于0，则表示输出的日志是带有时间戳的，反之则没有时间戳。"
+    },
+    {
+        "arg": "LOG_TAR", 
+        "doc": "如果该宏大于0，则表示输出的日志是带有标签的（任务名字），反之则没有标签。"
+    },
+    {
+        "arg": "SALOF_BUFF_SIZE", 
+        "doc": "设置日志库salof输出库的buf缓冲区大小，即最大一次性能输出多少个字节。"
+    },
+    {
+        "arg": "SALOF_FIFO_SIZE", 
+        "doc": "设置日志库salof的fifo缓冲区大小，即最能缓存多少个字节的日志数据。"
+    },
+    {
+        "arg": "SALOF_TASK_STACK_SIZE", 
+        "doc": "如果使用了空闲线程输出日志，则配置salof线程栈的大小。"
+    },
+    {
+        "arg": "SALOF_TASK_TICK", 
+        "doc": "如果使用了空闲线程输出日志，则配置salof线程栈的时间片大小。"
+    }
+]

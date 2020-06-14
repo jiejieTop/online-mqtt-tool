@@ -1,0 +1,277 @@
+<html>
+    <head>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="mqtt-config.js"></script>
+        <script type="text/javascript" src="mqtt-config-template.js"></script>
+        <script type="text/javascript" src="busuanzi.pure.mini.js"></script>
+        <link rel="stylesheet" type="text/css" href="mqtt-tools.css">
+        <title>mqttclient裁剪配置工具</title>
+        <meta charset="utf-8">
+    </head>
+    
+    <body onload="body_onload()">
+        <div class="heading-center">
+            <h1 align="center">欢迎使用mqttclient裁剪配置工具</h1>
+            <p align="center" style="color: black;">开源地址：<strong><a href="https://github.com/jiejieTop/mqttclient">https://github.com/jiejieTop/mqttclient</a></strong>.</p>
+        </div>
+
+        <div class="button-more">
+            <button type="button" id="btnMorePubTopic" name="btnMorePubTopic" onclick="window.location.href='index.html'" class="btn btn-outline-primary">MQTT代码生成工具</button>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">裁剪头文件</div>
+        </div>
+
+        <div class="wrapper-all" id="mqttConfig">
+            <div class="wrapper">
+                <div class="left-half">
+                    <div class="connection1">
+                        <div class="form-group">
+                            <label for="mqttDefaultBufSize">MQTT_DEFAULT_BUF_SIZE</label>
+                            <input type="text" class="form-control" id="mqttDefaultBufSize" name="mqttDefaultBufSize" placeholder="配置默认buf读写缓冲区，默认值：1024">
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="mqttDefaultCmdTimeout">MQTT_DEFAULT_CMD_TIMEOUT</label>
+                                <input type="text" class="form-control" id="mqttDefaultCmdTimeout" name="mqttDefaultCmdTimeout" placeholder="配置默认的cmd超时，默认值：5000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttMaxCmdTimeout">MQTT_MAX_CMD_TIMEOUT</label>
+                            <input type="text" class="form-control" id="mqttMaxCmdTimeout" name="mqttMaxCmdTimeout" placeholder="配置最大的cmd超时，默认值：20000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttMinCmdTimeout">MQTT_MIN_CMD_TIMEOUT</label>
+                            <input type="text" class="form-control" id="mqttMinCmdTimeout" name="mqttMinCmdTimeout" placeholder="配置最小的cmd超时，默认值：1000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttKeepAliveInterval">MQTT_KEEP_ALIVE_INTERVAL</label>
+                            <input type="text" class="form-control" id="mqttKeepAliveInterval" name="mqttKeepAliveInterval" placeholder="配置心跳间隔时间（秒），默认值：50">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttNetworkTypeNoTls">MQTT_NETWORK_TYPE_NO_TLS</label>
+                            <select type="text" class="form-control" id="mqttNetworkTypeNoTls" name="mqttNetworkTypeNoTls">
+                            <option value="//" selected>选择数据通道为TCP</option>    
+                            <option value="">选择数据通道为TLS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttVersion">MQTT_VERSION</label>
+                            <select type="text" class="form-control" id="mqttVersion" name="mqttVersion">
+                            <option value='4'>MQTT 3.1.1</option>     
+                            <option value='3'>MQTT 3.1</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="right-half">
+                    <div class="connection1">
+                        <div class="form-group">
+                            <label for="mqttTopicLenMax">MQTT_TOPIC_LEN_MAX</label>
+                            <input type="text" class="form-control" id="mqttTopicLenMax" name="mqttTopicLenMax" placeholder="配置订阅主题的字符串最大长度，超过将被截断，默认值：64">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttAckHandlerNumMax">MQTT_ACK_HANDLER_NUM_MAX</label>
+                            <input type="text" class="form-control" id="mqttAckHandlerNumMax" name="mqttAckHandlerNumMax" placeholder="配置mqtt等待应答列表的最大的待处理数量，默认值：64">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttThreadStackSize">MQTT_THREAD_STACK_SIZE</label>
+                            <input type="text" class="form-control" id="mqttThreadStackSize" name="mqttThreadStackSize" placeholder="配置mqtt线程栈大小，默认值：2048">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttThreadPrio">MQTT_THREAD_PRIO</label>
+                            <input type="text" class="form-control" id="mqttThreadPrio" name="mqttThreadPrio" placeholder="配置mqtt线程的优先级，默认值：5">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttThreadTick">MQTT_THREAD_TICK</label>
+                            <input type="text" class="form-control" id="mqttThreadTick" name="mqttThreadTick" placeholder="配置mqtt线程的时间片，默认值：50">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mqttReconnectDefaultDuration">MQTT_RECONNECT_DEFAULT_DURATION</label>
+                            <input type="text" class="form-control" id="mqttReconnectDefaultDuration" name="mqttReconnectDefaultDuration" placeholder="配置默认的重连时间间隔：默认值：1000">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="logLevel">LOG_LEVEL</label>
+                            <select type="text" class="form-control" id="logLevel" name="logLevel">
+                            <option value='ERR_LEVEL'>日志输出级别为：错误级别</option>
+                            <option value='WARN_LEVEL'>日志输出级别为：警告级别</option>
+                            <option value='INFO_LEVEL' selected>日志输出级别为：信息级别</option>
+                            <option value='DEBUG_LEVEL'>日志输出级别为：调试级别</option>
+                            </select>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <div class=" progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">配置salof异步日志库</div>
+        </div>
+
+        <div class="wrapper-all" id="salofConfig">
+            <div class="wrapper">
+                <div class="all">
+                    <div class="connection">
+                        <div class="form-group">
+                            <label for="logIsSalof">LOG_IS_SALOF</label>
+                            <select type="text" class="form-control" id="logIsSalof" name="logIsSalof" onchange="config_salof()">
+                                <option value=''>使用salof异步日志库</option>    
+                                <option value="//">不使用salof异步日志库</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="left-half-top">
+                    <div class="connection" id=salofLeftConfig>
+
+                    </div>
+                </div>
+                <div class="right-half-top">
+                    <div class="connection" id=salofRightConfig>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">生成代码</div>
+        </div>
+
+        <div class="wrapper1">
+            <button type="button" id="importTemplate" name="importTemplate" onclick="import_template()" class="btn btn-primary">导入模板</button>
+            <button type="button" id="generate" name="generate" onclick="generate_code()" class="btn btn-primary">生成代码</button>
+        </div>
+
+        <div class="wrapper-all">
+            <div class="wrapper">
+                <div class="all">
+                    <div class="connection">
+                        <div class="form-group">
+                            <label for="generateCode">生成的配置代码（将生成的代码覆盖mqtt_config.h文件）</label>
+                            <textarea class="form-control1" id="generateCode" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">配置参数说明</div>
+        </div>
+
+        <div class="wrapper-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-active">
+                        <th scope="col">参数</th>
+                        <th scope="col">说明</th>
+                    </tr>
+                </thead>
+                <tbody id="addTable" name="addTable">
+                <tbody>
+            </table>
+        </div>
+        <div class="statistics">
+            <span id="busuanzi_container_site_pv">
+                本站总访问量<span style="color:red" id="busuanzi_value_site_pv" ></span>次
+            </span>
+        </div>
+        <br>
+    </body>
+
+    <script type="text/javascript">
+
+        function body_onload() {
+            var obj = document.getElementById("salofLeftConfig");
+            obj.insertAdjacentHTML("beforeend", config_salof_left);
+            var obj = document.getElementById("salofRightConfig");
+            obj.insertAdjacentHTML("beforeend", config_salof_right);
+        }
+
+        var Ajax = function ()
+        {
+            $.getJSON ("mqtt-config.json", function (data){
+                $.each (data, function (i, item){
+                    // console.log(item);
+                    config_template_json = item;
+                });
+            });
+            $.getJSON ("mqtt-config-doc.json", function (data){
+                    $.each (data, function (i, item){
+                        var obj = document.getElementById("addTable");
+                        obj.insertAdjacentHTML("beforeend", get_more_table_template(i, item));
+                    });
+                });
+        }();
+
+        function config_salof() {
+            if (document.getElementById("logIsSalof").value == '') {
+                var obj = document.getElementById("salofLeftConfig");
+                if (obj.childElementCount == 0) {
+                    obj.insertAdjacentHTML("beforeend", config_salof_left);
+                }
+            
+                var obj = document.getElementById("salofRightConfig");
+                if (obj.childElementCount == 0) {
+                    obj.insertAdjacentHTML("beforeend", config_salof_right);
+                }
+            }
+            else {
+                var obj = document.getElementById("salofLeftConfig");
+                obj.innerHTML = "";
+                var obj = document.getElementById("salofRightConfig");
+                obj.innerHTML = "";
+                // obj.removeChild(obj.lastChild);
+            }
+        }
+
+
+        function import_template() {
+            do_supplement_config_template();
+        }
+
+        function generate_code() {
+            do_supplement_config_template();
+            //1.声明异步请求对象：
+            var xmlHttp = null;
+            if (window.ActiveXObject) {
+                // IE6, IE5 浏览器执行代码
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlHttp = new XMLHttpRequest();
+            }
+            //2.如果实例化成功，就调用open（）方法：
+            if (xmlHttp != null) {
+                xmlHttp.open("get", "mqtt-config.h", true);
+                xmlHttp.send();
+                xmlHttp.onreadystatechange = doResult; //设置回调函数                 
+            }
+            function doResult() {
+                if (xmlHttp.readyState == 4) { //4表示执行完成
+                    if (xmlHttp.status == 200) { //200表示执行成功
+                        do_supplement_config_template();
+                        $("#generateCode").val(do_generate_config_code(xmlHttp.responseText));
+                    }
+                }
+            }
+        }
+
+    </script>
+
+</html>

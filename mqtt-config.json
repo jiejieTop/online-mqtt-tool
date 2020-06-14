@@ -1,0 +1,30 @@
+[
+    {
+        "logIsSalof": "",
+        "useSalof": "(1U)", 
+        "salofOs": "USE_LINUX", 
+        "useIdleHook": "(0U)",
+        "logColor": "(1U)", 
+        "logTs": "(0U)", 
+        "logTar": "(0U)",
+        "salofBufSize": "512", 
+        "salofFifoSize": "4096", 
+        "salofTaskStackSize": "1024", 
+        "salofTaskTick": "50",
+        "mqttNetworkTypeNoTls": "//", 
+        "mqttTopicLenMax": "64", 
+        "mqttAckHandlerNumMax": "64", 
+        "mqttDefaultBufSize": "1024",
+        "mqttDefaultCmdTimeout": "5000", 
+        "mqttMaxCmdTimeout": "20000", 
+        "mqttMinCmdTimeout": "1000",
+        "mqttKeepAliveInterval": "50",
+        "mqttVersion": "4", 
+        "mqttThreadStackSize": "2048", 
+        "mqttThreadPrio": "5", 
+        "mqttThreadTick": "50", 
+        "mqttReconnectDefaultDuration": "1000"
+    }
+]
+
+

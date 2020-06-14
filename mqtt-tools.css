@@ -1266,6 +1266,26 @@ table {
     margin: 30px 30px
 }
 
+.left-half{
+  width: 50%;
+  margin: 30px 30px
+}
+
+.right-half{
+  width: 50%;
+  margin: 30px 30px
+}
+
+.left-half-top{
+  width: 50%;
+  margin: 0px 30px
+}
+
+.right-half-top{
+  width: 50%;
+  margin: 0px 30px
+}
+
 .all{
     width: 100%;
     margin: 10px 30px

@@ -97,11 +97,13 @@ function do_import_template()
     $("#pubTopicMessage1").val(random_string(20));
 }
 
-function get_json_val(json, key) {
+function get_json_val(json, key) 
+{
     return json[''+key+''];
 }
 
-function do_generate_code_form_data(code_json, json) {
+function do_generate_code_form_data(code_json, json) 
+{
     var tmp_code = '';
     for (var val in json) {
         if ((json[val] != "") && (json[val] != "NULL")) {
